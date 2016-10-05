@@ -5,24 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles/bootstrap.min.css">
     <link rel="stylesheet" href="styles/styles.css">
+    <style>
+      .emptyMessage {
+        font-weight: bold;
+        color: red;
+        font-size: 1.2em;
+      }
+      li {
+        margin-bottom: 7px;
+        font-size: 1.2em;
+      }
+      li > button {
+        margin-left: 6px;
+      }
+      button > span {
+        color: green;
+      }
+    </style>
   </head>
-<body>
-   <div class="container">
+<body ng-app='NarrowItDownApp'>
+   <div class="container" ng-controller='NarrowItDownController as narrow'>
     <h1>Narrow Down Your Chinese Menu Choice</h1>
 
-    <div class="form-group">
-      <input type="text" placeholder="search term" class="form-control">
-    </div>
-    <div class="form-group narrow-button">
-      <button class="btn btn-primary">Narrow It Down For Me!</button>
-    </div>
+      <div class="row">
+        <div class="form-group col-md-12">
+          <div>
+            <input type="text" placeholder="search term" class="form-control" ng-model="narrow.searchMenuItem">
+          </div>
+          <div class="narrow-button">
+            <button class="btn btn-primary" ng-click="narrow.searchMenu();">Narrow It Down For Me!</button>
+          </div>
+        </div>
+      </div>
 
-    <!-- Bonus loader (see Bonus section of the assignment) -->
-    <items-loader-indicator></items-loader-indicator>
+      <!-- Bonus loader (see Bonus section of the assignment) -->
+      <!-- <items-loader-indicator></items-loader-indicator> -->
 
-    <!-- found-items should be implemented as a component -->
-    <found-items found-items="...." on-remove="...."></found-items>
+      <div class="row">
+        <div class="col-md-12">
+          <found-items found-items="narrow.found" on-remove="narrow.removeFound(index)"></found-items>
+
+          <div class="emptyMessage">
+            {{ narrow.notFoundMessage }}
+          </div>
+
+        </div>
+      </div>
+
   </div>
 
+  <script src="angular.min.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
